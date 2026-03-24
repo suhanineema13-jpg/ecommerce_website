@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TrendyStealsApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trendy Steals</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        header {
+            background: url('https://th.bing.com/th/id/OIP.GYuF8hoSzY6GnKKczE-hPgHaE8?w=305&h=204&c=7&r=0&o=5&dpr=1.3&pid=1.7') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        .ribbon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            padding: 5px 15px;
+            font-weight: bold;
+            transform: rotate(20deg);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #ffb6c1;
+            padding: 0.7rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        nav a:hover {
+            background-color: #ff69b4;
+            border-radius: 5px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .product {
+            background: white;
+            margin: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .product img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+        }
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30%;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .login-modal input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .login-modal button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .login-modal button:hover {
+            background-color: #d14794;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        footer {
+            background-color: #ff69b4;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body ng-controller="MainController">
+    <header>
+        <h1>Trendy Steals</h1>
+        <div class="ribbon">SALE</div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="categories1.html">Categories</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" onclick="showLogin()">Login</a>
+    </nav>
+    <div class="container">
+        <div class="product" ng-repeat="product in products">
+            <img ng-src="{{product.image}}" alt="{{product.name}}">
+            <h2>{{product.name}}</h2>
+            <p>{{product.price}}</p>
+            <button ng-click="addToCart(product)">Add to Cart</button>
+        </div>
+    </div>
+    <div class="overlay" id="overlay" onclick="hideLogin()"></div>
+    <div class="login-modal" id="loginModal">
+        <h2>Login</h2>
+        <input type="text" placeholder="Username" ng-model="username">
+        <input type="password" placeholder="Password" ng-model="password">
+        <button ng-click="login()">Login</button>
+        <p style="color: red;" ng-show="errorMessage">{{errorMessage}}</p>
+    </div>
+    <footer>
+        <h2>Your One-Stop Solution</h2>
+        <p>Providing the best services for you.</p>
+        <p>&copy; 2025 Trendy Steals. All Rights Reserved.</p>
+    </footer>
+    <script>
+        var app = angular.module('TrendyStealsApp', []);
+        app.controller('MainController', function($scope) {
+            $scope.products = [];
+            for (let i = 1; i <= 13; i++) {
+                $scope.products.push({ name: 'Product ' + i, price: '₹' + (2000 + i * 100), image: 'https://via.placeholder.com/150' });
+            }
+            $scope.addToCart = function(product) {
+                alert('Product added to cart');
+            };
+            $scope.login = function() {
+                if ($scope.username === 'admin' && $scope.password === 'password123') {
+                    alert('Login Successful!');
+                    hideLogin();
+                } else {
+                    $scope.errorMessage = 'Invalid username or password';
+                }
+            };
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TrendyStealsApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trendy Steals - Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff0f5;
+        }
+        header, footer {
+            background-color: #ff69b4;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #ffb6c1;
+            padding: 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        nav a:hover {
+            background-color: #ff69b4;
+            border-radius: 5px;
+        }
+        .cart-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .cart-item h3 {
+            margin: 0;
+        }
+        .checkout-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #d14794;
+            color: white;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .checkout-button:hover {
+            background-color: #b0306d;
+        }
+    </style>
+</head>
+<body ng-controller="CartController">
+    <header>
+        <h1>Your Cart</h1>
+    </header>
+    <nav>
+        <a href="project.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="categories1.html">Categories</a>
+        <a href="cart.html">Cart</a>
+        <a href="#" onclick="showLogin()">Login</a>
+    </nav>
+
+    <div class="cart-container">
+        <div class="cart-item" ng-repeat="item in cart">
+            <h3>{{item.name}}</h3>
+            <p>₹{{item.price}}</p>
+        </div>
+        <h3>Total: ₹{{ getTotal() }}</h3>
+        <button class="checkout-button" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Trendy Steals. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        var app = angular.module('TrendyStealsApp', []);
+        app.controller('CartController', function($scope) {
+            $scope.cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            $scope.getTotal = function() {
+                return $scope.cart.reduce((total, item) => total + item.price, 0).toFixed(2);
+            };
+        });
+    </script>
+</body>
+</html>
+
